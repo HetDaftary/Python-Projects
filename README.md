@@ -1,6 +1,6 @@
 # Python-Projects
 
-Some simple Python based projects.
+Python based projects.
 
 ## List of projects implemented
 
