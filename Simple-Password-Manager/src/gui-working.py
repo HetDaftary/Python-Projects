@@ -2,6 +2,7 @@ from Working import Working
 from PyQt5.QtWidgets import *
 from sys import argv, exit
 import qdarkstyle
+from clipboard import copy
 
 class GUI:
     def __init__(self):
@@ -26,17 +27,33 @@ class GUI:
         self.loginPage = QWidget()
         self.workingPage = QWidget()
         self.changePasswordPage = QWidget()
+        self.getEntryPage = QWidget()
+        self.seeEntriesPage = QWidget()
+        self.putEntryPage = QWidget()
+        self.updateEntryPage = QWidget()
 
         self.initLoginPage()
         self.initWorkingPage()
         self.initChangePasswordPage()
+        self.initGetEntryPage()
+        self.initSeeEntriesPage()
+        self.initPutEntryPage()
+        self.initUpdateEntryPage()
 
         self.mainWinLayout.addWidget(self.loginPage)
         self.mainWinLayout.addWidget(self.workingPage)
         self.mainWinLayout.addWidget(self.changePasswordPage)
+        self.mainWinLayout.addWidget(self.getEntryPage)
+        self.mainWinLayout.addWidget(self.seeEntriesPage)
+        self.mainWinLayout.addWidget(self.putEntryPage)
+        self.mainWinLayout.addWidget(self.updateEntryPage)
 
         self.workingPage.hide()
         self.changePasswordPage.hide()
+        self.getEntryPage.hide()
+        self.seeEntriesPage.hide()
+        self.putEntryPage.hide()
+        self.updateEntryPage.hide()
 
     def initLoginPage(self):
         
@@ -73,9 +90,6 @@ class GUI:
     def initWorkingPage(self):
         vLayout = QVBoxLayout()
         self.workingPage.setLayout(vLayout)
-        self.workingPagePanel0 = QWidget()
-        vLayout.addWidget(self.workingPagePanel0)
-        
         workingPagePanel1 = QWidget()
         gridLayout = QGridLayout()
         workingPagePanel1.setLayout(gridLayout)
@@ -151,6 +165,75 @@ class GUI:
 
         vLayout.addWidget(hWid)
 
+    def initGetEntryPage(self):
+        vLayout = QVBoxLayout()
+        self.getEntryPage.setLayout(vLayout)
+        # Setting Layout
+
+        wid1 = QWidget()
+        gridLayout = QGridLayout()
+        wid1.setLayout(gridLayout)
+        lab1 = QLabel("Enter Website:")
+        gridLayout.addWidget(lab1, 0, 0)
+        getEntryPageWebsiteEntry = QLineEdit()
+        gridLayout.addWidget(getEntryPageWebsiteEntry, 0, 1)
+        lab2 = QLabel("Enter E-mail:")
+        gridLayout.addWidget(lab2, 1, 0)
+        getEntryPageEmailEntry = QLineEdit()
+        gridLayout.addWidget(getEntryPageEmailEntry, 1, 1)
+
+        vLayout.addWidget(wid1)
+
+        self.errorsInGetEntryLabel = QLabel()
+        vLayout.addWidget(self.errorsInGetEntryLabel)
+
+        wid2 = QWidget()
+        hLayout = QHBoxLayout()
+        wid2.setLayout(hLayout)
+
+        goBackButton = QPushButton(text = "Go Back")
+        goBackButton.clicked.connect(lambda : self.goBackFunction(self.getEntryPage))
+        hLayout.addWidget(goBackButton)
+
+        getPasswordButton = QPushButton(text = "Get Password")
+        getPasswordButton.clicked.connect(lambda : self.getPasswordGetEntry(getEntryPageWebsiteEntry.text(), getEntryPageEmailEntry.text()))
+        hLayout.addWidget(getPasswordButton)
+        vLayout.addWidget(wid2)
+
+    def initSeeEntriesPage(self):
+        vLayout = QVBoxLayout()
+        self.seeEntriesPage.setLayout(vLayout)
+
+        self.placeToPutEntries = QWidget()
+        self.placeToPutEntriesLayout = QGridLayout()
+        self.placeToPutEntries.setLayout(self.placeToPutEntriesLayout)
+        vLayout.addWidget(self.placeToPutEntries)
+
+        goBackButton = QPushButton("Go back")
+        goBackButton.clicked.connect(lambda : self.goBackFunction(self.seeEntriesPage))
+        vLayout.addWidget(goBackButton)
+
+    def initPutEntryPage(self):
+        vLayout = QVBoxLayout()
+        self.putEntryPage.setLayout(vLayout)
+
+        # TODO
+        
+
+        goBackButton = QPushButton("Go back")
+        goBackButton.clicked.connect(lambda : self.goBackFunction(self.putEntryPage))
+        vLayout.addWidget(goBackButton)
+
+    def initUpdateEntryPage(self):
+        vLayout = QVBoxLayout()
+        self.updateEntryPage.setLayout(vLayout)
+
+        # TODO
+
+        goBackButton = QPushButton("Go back")
+        goBackButton.clicked.connect(lambda : self.goBackFunction(self.updateEntryPage))
+        vLayout.addWidget(goBackButton)
+
     def checkLogin(self):
         self.working = Working(self.passIn.text())
         
@@ -160,27 +243,50 @@ class GUI:
         else:
             self.isPassCorrectLabel.setText("Password Not correct. Try Again.")
             self.isPassCorrectLabel.adjustSize()
-            self.working = None
-            
+            self.working = None            
+
+    def cleanAWidget(self, layoutToClean):
+        for i in reversed(range(layoutToClean.count())): 
+            layout.itemAt(i).widget().setParent(None)
 
     def getEntry(self):
-        pass
+        self.workingPage.hide()
+        self.getEntryPage.show()
 
     def seeEntries(self):
-        pass 
+        currentEntries = self.working.seeEntries()
+
+        self.cleanAWidget(self.placeToPutEntriesLayout)
+
+        count = 1
+
+        self.placeToPutEntriesLayout.addWidget(QLabel("Email"), 0, 0)
+        self.placeToPutEntriesLayout.addWidget(QLabel("Website"), 0, 1)
+
+        for i in currentEntries:
+            countV = 0
+            for j in i:
+                self.placeToPutEntriesLayout.addWidget(QLabel(text = j), count, countV)
+                countV += 1
+            count += 1
+
+        self.workingPage.hide()
+        self.seeEntriesPage.show()
 
     def putEntry(self):
-        pass
+        self.workingPage.hide()
+        self.putEntryPage.show()
 
     def updateEntry(self):
-        pass
+        self.workingPage.hide()
+        self.updateEntryPage.show()
 
     def changePrimaryPassword(self):
         self.workingPage.hide()
         self.changePasswordPage.show()
 
     def goBackFunction(self, widgetToRemove):
-        self.changePasswordPage.hide()
+        widgetToRemove.hide()
         self.workingPage.show()
 
     def tryChangePassword(self):
@@ -201,6 +307,17 @@ class GUI:
             else:
                 self.errorLabelinChangePasswordPage.setText("Old password was wrong. Password not changeed.")
                 self.errorLabelinChangePasswordPage.adjustSize()
+
+    def getPasswordGetEntry(self, website, email):
+        try:
+            self.getPassword(website, email)
+            self.errorsInGetEntryLabel.setText("Got the password. Copied to Clipboard")
+        except:
+            self.errorsInGetEntryLabel.setText("Record does not exist.")
+
+
+    def getPassword(self, website, email):
+        copy(self.working.getEntry(email, website))
 
 if __name__ == "__main__":
     gui = GUI()

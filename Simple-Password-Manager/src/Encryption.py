@@ -33,7 +33,4 @@ def hash(key): # For authentication purpose
     return ans
 
 def hashEnc(key):
-    ans = key
-    for i in range(HASH_COUNT):
-        ans = hashlib.sha256(ans.encode()).hexdigest()
-    return ans
+    return hashlib.sha256(key.encode()).digest()

@@ -15,7 +15,7 @@ class Working:
             # print("Session Granted")      
             self._primaryPass = hashEnc(primaryPass) 
         else:
-            self.__del__()
+            pass
 
     def didPassWork(self):
         try:
