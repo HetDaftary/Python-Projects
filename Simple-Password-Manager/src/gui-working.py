@@ -259,11 +259,49 @@ class GUI:
         vLayout = QVBoxLayout()
         self.updateEntryPage.setLayout(vLayout)
 
-        # TODO
+        wid1 = QWidget()
+        gridLayout = QGridLayout()
+        wid1.setLayout(gridLayout)
+        
+        lab1 = QLabel("Enter old Website:")
+        gridLayout.addWidget(lab1, 0, 0)
+        self.updateEntryOldWebsiteEntry = QLineEdit()
+        gridLayout.addWidget(self.updateEntryOldWebsiteEntry, 0, 1)
+        lab2 = QLabel("Enter old email:")
+        gridLayout.addWidget(lab2, 1, 0)
+        self.updateEntryOldEmailEntry = QLineEdit()
+        gridLayout.addWidget(self.updateEntryOldEmailEntry, 1, 1)
+        lab3 = QLabel("Enter new Website:")
+        gridLayout.addWidget(lab3, 2, 0)
+        self.updateEntryNewWebsiteEntry = QLineEdit()
+        gridLayout.addWidget(self.updateEntryNewWebsiteEntry, 2, 1)
+        lab4 = QLabel("Enter new email:")
+        gridLayout.addWidget(lab4, 3, 0)
+        self.updateEntryNewEmailEntry = QLineEdit()
+        gridLayout.addWidget(self.updateEntryNewEmailEntry, 3, 1)
+        lab5 = QLabel("Enter new password:")
+        gridLayout.addWidget(lab5, 4, 0)
+        self.updateEntryNewPasswordEntry = QLineEdit()
+        gridLayout.addWidget(self.updateEntryNewPasswordEntry, 4, 1)
+
+        vLayout.addWidget(wid1)
+        
+        self.errorsInUpdateEntry = QLabel()
+        vLayout.addWidget(self.errorsInUpdateEntry)
+
+        wid2 = QWidget()
+        hLayout = QHBoxLayout()
+        wid2.setLayout(hLayout)
 
         goBackButton = QPushButton("Go back")
         goBackButton.clicked.connect(lambda : self.goBackFunction(self.updateEntryPage))
-        vLayout.addWidget(goBackButton)
+        hLayout.addWidget(goBackButton)
+
+        updateEntryButton = QPushButton("Update Entry")
+        updateEntryButton.clicked.connect(self.updateEntryFunction)
+        hLayout.addWidget(updateEntryButton)
+
+        vLayout.addWidget(wid2)
 
     def checkLogin(self):
         self.working = Working(self.passIn.text())
@@ -281,6 +319,8 @@ class GUI:
             layout.itemAt(i).widget().setParent(None)
 
     def getEntry(self):
+        self.errorsInGetEntryLabel.setText("")
+        self.errorsInGetEntryLabel.adjustSize()
         self.workingPage.hide()
         self.getEntryPage.show()
 
@@ -305,14 +345,20 @@ class GUI:
         self.seeEntriesPage.show()
 
     def putEntry(self):
+        self.errorsInPutEntry.setText("")
+        self.errorsInPutEntry.adjustSize()
         self.workingPage.hide()
         self.putEntryPage.show()
 
     def updateEntry(self):
+        self.errorsInUpdateEntry.setText("")
+        self.errorsInUpdateEntry.adjustSize()
         self.workingPage.hide()
         self.updateEntryPage.show()
 
     def changePrimaryPassword(self):
+        self.errorLabelinChangePasswordPage.setText("")
+        self.errorLabelinChangePasswordPage.adjustSize()
         self.workingPage.hide()
         self.changePasswordPage.show()
 
@@ -343,20 +389,41 @@ class GUI:
         try:
             self.getPassword(website, email)
             self.errorsInGetEntryLabel.setText("Got the password. Copied to Clipboard")
+            self.errorsInGetEntryLabel.adjustSize()
         except:
             self.errorsInGetEntryLabel.setText("Record does not exist.")
+            self.errorsInGetEntryLabel.adjustSize()
 
 
     def getPassword(self, website, email):
         copy(self.working.getEntry(email, website))
 
     def putEntryFunction(self):  
-        web = self.putEntryWebsiteEntry.text()  
-        email = self.putEntryEmailEntry.text()
-        password = self.putEntryPasswordEntry.text()
-        self.working.putEntry(email, web, password)
-        self.errorsInPutEntry.setText("Registered.")
-        self.errorsInPutEntry.adjustSize()
-    
+        try:    
+            web = self.putEntryWebsiteEntry.text()  
+            email = self.putEntryEmailEntry.text()
+            password = self.putEntryPasswordEntry.text()
+            self.working.putEntry(email, web, password)
+            self.errorsInPutEntry.setText("Registered.")
+            self.errorsInPutEntry.adjustSize()
+            self.errorsInPutEntry.adjustSize()
+        except:
+            self.errorsInPutEntry("Error occured.")
+            self.errorsInPutEntry.adjustSize()
+
+    def updateEntryFunction(self):
+        try:
+            email = self.updateEntryOldEmailEntry.text()
+            website = self.updateEntryOldWebsiteEntry.text()
+            newEmail = self.updateEntryNewEmailEntry.text()
+            newWebsite = self.updateEntryNewWebsiteEntry.text()
+            newPassword = self.updateEntryNewPasswordEntry.text()
+            self.working.updateEntry(email, website, newEmail, newWebsite, newPassword)
+            self.errorsInUpdateEntry.setText("Updated.")
+            self.errorsInUpdateEntry.adjustSize()
+        except:
+            self.errorsInUpdateEntry.setText("Error occured.")
+            self.errorsInUpdateEntry.adjustSize()
+
 if __name__ == "__main__":
     gui = GUI()
