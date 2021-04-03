@@ -217,12 +217,43 @@ class GUI:
         vLayout = QVBoxLayout()
         self.putEntryPage.setLayout(vLayout)
 
-        # TODO
-        
+        wid1 = QWidget()
+        gridLayout = QGridLayout()
+        wid1.setLayout(gridLayout)
+
+        lab1 = QLabel("Website:")
+        gridLayout.addWidget(lab1, 0, 0)
+        self.putEntryWebsiteEntry = QLineEdit()
+        gridLayout.addWidget(self.putEntryWebsiteEntry, 0, 1)
+
+        lab2 = QLabel("Email:")
+        gridLayout.addWidget(lab2, 1, 0)
+        self.putEntryEmailEntry = QLineEdit()
+        gridLayout.addWidget(self.putEntryEmailEntry, 1, 1)
+
+        lab3 = QLabel("Password:")
+        gridLayout.addWidget(lab3, 2, 0)
+        self.putEntryPasswordEntry = QLineEdit()
+        gridLayout.addWidget(self.putEntryPasswordEntry)
+
+        vLayout.addWidget(wid1)
+
+        self.errorsInPutEntry = QLabel("")
+        vLayout.addWidget(self.errorsInPutEntry)
+
+        wid2 = QWidget()   
+        hLayout = QHBoxLayout()
+        wid2.setLayout(hLayout)
 
         goBackButton = QPushButton("Go back")
         goBackButton.clicked.connect(lambda : self.goBackFunction(self.putEntryPage))
-        vLayout.addWidget(goBackButton)
+        hLayout.addWidget(goBackButton)
+        
+        putEntryButton = QPushButton("Put Entry")
+        putEntryButton.clicked.connect(self.putEntryFunction)
+        hLayout.addWidget(putEntryButton)
+
+        vLayout.addWidget(wid2)
 
     def initUpdateEntryPage(self):
         vLayout = QVBoxLayout()
@@ -319,5 +350,13 @@ class GUI:
     def getPassword(self, website, email):
         copy(self.working.getEntry(email, website))
 
+    def putEntryFunction(self):  
+        web = self.putEntryWebsiteEntry.text()  
+        email = self.putEntryEmailEntry.text()
+        password = self.putEntryPasswordEntry.text()
+        self.working.putEntry(email, web, password)
+        self.errorsInPutEntry.setText("Registered.")
+        self.errorsInPutEntry.adjustSize()
+    
 if __name__ == "__main__":
     gui = GUI()
