@@ -25,6 +25,7 @@ class GUI:
         self.lab = QLabel(text = "Enter Password:")
         self.lab.adjustSize()
         self.input = QLineEdit()
+        self.input.setEchoMode(QLineEdit.Password)
         self.b = QPushButton(text = "Make-Database")
         self.b.clicked.connect(self.onPress)
 

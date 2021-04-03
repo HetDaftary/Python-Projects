@@ -68,6 +68,7 @@ class GUI:
         lab.adjustSize()
         hLayout.addWidget(lab)
         self.passIn = QLineEdit()
+        self.passIn.setEchoMode(QLineEdit.Password)
         hLayout.addWidget(self.passIn)
         
         layout.addWidget(entWid)
@@ -136,12 +137,14 @@ class GUI:
         gridLayout.addWidget(lab2, 1, 0)
         
         self.newPassEntry = QLineEdit()
+        self.newPassEntry.setEchoMode(QLineEdit.Password)
         gridLayout.addWidget(self.newPassEntry, 1, 1)
 
         lab3 = QLabel("Confirm New Password:")
         gridLayout.addWidget(lab3, 2, 0)
 
         self.confirmNewPassEntry = QLineEdit()
+        self.confirmNewPassEntry.setEchoMode(QLineEdit.Password)
         gridLayout.addWidget(self.confirmNewPassEntry, 2, 1)
 
         # Adding grid wid to change password page.
@@ -175,12 +178,12 @@ class GUI:
         wid1.setLayout(gridLayout)
         lab1 = QLabel("Enter Website:")
         gridLayout.addWidget(lab1, 0, 0)
-        getEntryPageWebsiteEntry = QLineEdit()
-        gridLayout.addWidget(getEntryPageWebsiteEntry, 0, 1)
+        self.getEntryPageWebsiteEntry = QLineEdit()
+        gridLayout.addWidget(self.getEntryPageWebsiteEntry, 0, 1)
         lab2 = QLabel("Enter E-mail:")
         gridLayout.addWidget(lab2, 1, 0)
-        getEntryPageEmailEntry = QLineEdit()
-        gridLayout.addWidget(getEntryPageEmailEntry, 1, 1)
+        self.getEntryPageEmailEntry = QLineEdit()
+        gridLayout.addWidget(self.getEntryPageEmailEntry, 1, 1)
 
         vLayout.addWidget(wid1)
 
@@ -196,7 +199,7 @@ class GUI:
         hLayout.addWidget(goBackButton)
 
         getPasswordButton = QPushButton(text = "Get Password")
-        getPasswordButton.clicked.connect(lambda : self.getPasswordGetEntry(getEntryPageWebsiteEntry.text(), getEntryPageEmailEntry.text()))
+        getPasswordButton.clicked.connect(lambda : self.getPasswordGetEntry(self.getEntryPageWebsiteEntry.text(), self.getEntryPageEmailEntry.text()))
         hLayout.addWidget(getPasswordButton)
         vLayout.addWidget(wid2)
 
@@ -234,6 +237,7 @@ class GUI:
         lab3 = QLabel("Password:")
         gridLayout.addWidget(lab3, 2, 0)
         self.putEntryPasswordEntry = QLineEdit()
+        self.putEntryPasswordEntry.setEchoMode(QLineEdit.Password)
         gridLayout.addWidget(self.putEntryPasswordEntry)
 
         vLayout.addWidget(wid1)
@@ -282,6 +286,7 @@ class GUI:
         lab5 = QLabel("Enter new password:")
         gridLayout.addWidget(lab5, 4, 0)
         self.updateEntryNewPasswordEntry = QLineEdit()
+        self.updateEntryNewPasswordEntry.setEchoMode(QLineEdit.Password)
         gridLayout.addWidget(self.updateEntryNewPasswordEntry, 4, 1)
 
         vLayout.addWidget(wid1)
@@ -316,9 +321,11 @@ class GUI:
 
     def cleanAWidget(self, layoutToClean):
         for i in reversed(range(layoutToClean.count())): 
-            layout.itemAt(i).widget().setParent(None)
+            layoutToClean.itemAt(i).widget().setParent(None)
 
     def getEntry(self):
+        self.getEntryPageEmailEntry.setText("")
+        self.getEntryPageWebsiteEntry.setText("")
         self.errorsInGetEntryLabel.setText("")
         self.errorsInGetEntryLabel.adjustSize()
         self.workingPage.hide()
@@ -345,12 +352,20 @@ class GUI:
         self.seeEntriesPage.show()
 
     def putEntry(self):
+        self.putEntryWebsiteEntry.setText("")
+        self.putEntryEmailEntry.setText("")
+        self.putEntryPasswordEntry.setText("")
         self.errorsInPutEntry.setText("")
         self.errorsInPutEntry.adjustSize()
         self.workingPage.hide()
         self.putEntryPage.show()
 
     def updateEntry(self):
+        self.updateEntryOldWebsiteEntry.setText("")
+        self.updateEntryOldEmailEntry.setText("")
+        self.updateEntryNewWebsiteEntry.setText("")
+        self.updateEntryNewEmailEntry.setText("")
+        self.updateEntryNewPasswordEntry.setText("")
         self.errorsInUpdateEntry.setText("")
         self.errorsInUpdateEntry.adjustSize()
         self.workingPage.hide()
