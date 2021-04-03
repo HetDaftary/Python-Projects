@@ -19,3 +19,13 @@ Authentication done using SHA-512
 * GUI:
   * Step 1: Setup, For this, run gui-setup.py file and enter the password.
   * Step 2: Working: For this, run gui-working file when you want to use it.
+
+## Images:
+<br/>
+<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/1.png">
+<br/><br/>
+<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/2.png">
+<br/><br/>
+<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/3.png">
+<br/><br/>
+<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/4.png">
