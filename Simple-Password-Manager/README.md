@@ -13,5 +13,9 @@ Authentication done using SHA-512
 * Easy to change the number of rounds, just need to open Encryption.py and change the HASH_COUNT constant.
 * Current Version: <b>1.0</b>
 ## How to run it:
-* Step 1: Setup. For this run, the setup.py file and enter the password.
-* Step 2: Use: For this, run the command-line.py when you want to use it.
+* Command-Line:
+  * Step 1: Setup. For this, run commandline-setup.py file and enter the password.
+  * Step 2: Use: For this, run the command-line.py when you want to use it.
+* GUI:
+  * Step 1: Setup, For this, run gui-setup.py file and enter the password.
+  * Step 2: Working: For this, run gui-working file when you want to use it.
