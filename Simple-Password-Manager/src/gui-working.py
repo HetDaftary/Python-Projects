@@ -1,27 +1,30 @@
 from Working import Working
 from PyQt5.QtWidgets import *
 from sys import argv, exit
-import qdarkstyle
 from clipboard import copy
+from darkdetect import isDark
+from qt_material import apply_stylesheet
+
+darkTheme, lightTheme = 'dark_blue.xml', 'light_blue.xml'
 
 class GUI:
     def __init__(self):
         self.app = QApplication(["Simple-Password-Manager-Working"])
-        self.app.setStyleSheet(qdarkstyle.load_stylesheet())
+        self.mainWindow = QMainWindow()
         self.mainWin = QWidget()
         self.mainWinLayout = QHBoxLayout()
         self.mainWin.setLayout(self.mainWinLayout)
-
         self.initWorking()
         self.initUI()
 
-        self.mainWin.show()
+        self.mainWindow.setCentralWidget(self.mainWin)
+        self.mainWindow.show()
         exit(self.app.exec_())
 
     def initWorking(self):
-        self.i = 0
-        self.isOpen = True
+        global darkTheme
         self.working = None
+        self.setTheme(darkTheme)
 
     def initUI(self):
         self.loginPage = QWidget()
@@ -39,6 +42,7 @@ class GUI:
         self.initSeeEntriesPage()
         self.initPutEntryPage()
         self.initUpdateEntryPage()
+        self.initMenuBar()
 
         self.mainWinLayout.addWidget(self.loginPage)
         self.mainWinLayout.addWidget(self.workingPage)
@@ -54,6 +58,22 @@ class GUI:
         self.seeEntriesPage.hide()
         self.putEntryPage.hide()
         self.updateEntryPage.hide()
+
+    def initMenuBar(self):
+        global darkTheme, lightTheme
+
+        self.menuBar = QMenuBar()
+        self.mainWindow.setMenuBar(self.menuBar)
+        self.themeMenu = QMenu("theme menu", self.mainWindow)
+
+        self.lightTheme = QAction("Light Theme", self.themeMenu)
+        self.themeMenu.addAction(self.lightTheme)
+        self.lightTheme.triggered.connect(lambda : self.setTheme(lightTheme))
+        self.darkTheme = QAction("Dark Theme", self.themeMenu)
+        self.themeMenu.addAction(self.darkTheme)
+        self.darkTheme.triggered.connect(lambda : self.setTheme(darkTheme))
+
+        self.menuBar.addMenu(self.themeMenu)
 
     def initLoginPage(self):
         
@@ -439,6 +459,9 @@ class GUI:
         except:
             self.errorsInUpdateEntry.setText("Error occured.")
             self.errorsInUpdateEntry.adjustSize()
+
+    def setTheme(self, theme):
+        apply_stylesheet(self.app, theme)
 
 if __name__ == "__main__":
     gui = GUI()
