@@ -362,6 +362,7 @@ class GUI:
         self.placeToPutEntriesLayout.addWidget(QLabel("Email"), 0, 0)
         self.placeToPutEntriesLayout.addWidget(QLabel("Website"), 0, 1)
         self.placeToPutEntriesLayout.addWidget(QLabel(""), 0, 2)
+        self.placeToPutEntriesLayout.addWidget(QLabel(""), 0, 3)
 
         for i in range(len(self.currentEntries)):
             countV = 0
@@ -369,10 +370,15 @@ class GUI:
                 self.placeToPutEntriesLayout.addWidget(QLabel(text = j), count, countV)
                 # print(count, countV)
                 countV += 1
+            
             currentButton = QPushButton("Get this Entry")
             currentButton.clicked.connect(lambda _, a=i: self.getPasswordFromButton(self.currentEntries[a]))
             self.placeToPutEntriesLayout.addWidget(currentButton, count, countV)
             countV += 1
+
+            currentUpdateButton = QPushButton("Update this Entry")
+            currentUpdateButton.clicked.connect(lambda _, a=i: self.updateEntryFromSeeEntries(self.currentEntries[a]))
+            self.placeToPutEntriesLayout.addWidget(currentUpdateButton, count, countV)
 
             count += 1
 
@@ -436,6 +442,16 @@ class GUI:
         except:
             self.errorsInGetEntryLabel.setText("Record does not exist.")
             self.errorsInGetEntryLabel.adjustSize()
+
+    def updateEntryFromSeeEntries(self, toget):
+        self.updateEntryOldEmailEntry.setText(toget[0])
+        self.updateEntryOldWebsiteEntry.setText(toget[1])
+        self.updateEntryNewEmailEntry.setText("")
+        self.updateEntryNewWebsiteEntry.setText("")
+        self.updateEntryNewPasswordEntry.setText("")
+
+        self.seeEntriesPage.hide()
+        self.updateEntryPage.show()
 
     def getPasswordFromButton(self, toget):
        self.getPassword(toget[1], toget[0]) 

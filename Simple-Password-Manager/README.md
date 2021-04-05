@@ -31,3 +31,5 @@ Authentication done using SHA-512
 <img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/4.png">
 <br/><br/>
 <img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/5.png">
+<br/><br/>
+<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/6.png">
