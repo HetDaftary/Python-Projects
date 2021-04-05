@@ -4,6 +4,7 @@ from sys import argv, exit
 from clipboard import copy
 from darkdetect import isDark
 from qt_material import apply_stylesheet
+from copy import deepcopy
 
 darkTheme, lightTheme = 'dark_blue.xml', 'light_blue.xml'
 
@@ -352,7 +353,7 @@ class GUI:
         self.getEntryPage.show()
 
     def seeEntries(self):
-        currentEntries = self.working.seeEntries()
+        self.currentEntries = self.working.seeEntries()
 
         self.cleanAWidget(self.placeToPutEntriesLayout)
 
@@ -360,12 +361,19 @@ class GUI:
 
         self.placeToPutEntriesLayout.addWidget(QLabel("Email"), 0, 0)
         self.placeToPutEntriesLayout.addWidget(QLabel("Website"), 0, 1)
+        self.placeToPutEntriesLayout.addWidget(QLabel(""), 0, 2)
 
-        for i in currentEntries:
+        for i in range(len(self.currentEntries)):
             countV = 0
-            for j in i:
+            for j in self.currentEntries[i]:
                 self.placeToPutEntriesLayout.addWidget(QLabel(text = j), count, countV)
+                # print(count, countV)
                 countV += 1
+            currentButton = QPushButton("Get this Entry")
+            currentButton.clicked.connect(lambda _, a=i: self.getPasswordFromButton(self.currentEntries[a]))
+            self.placeToPutEntriesLayout.addWidget(currentButton, count, countV)
+            countV += 1
+
             count += 1
 
         self.workingPage.hide()
@@ -429,6 +437,8 @@ class GUI:
             self.errorsInGetEntryLabel.setText("Record does not exist.")
             self.errorsInGetEntryLabel.adjustSize()
 
+    def getPasswordFromButton(self, toget):
+       self.getPassword(toget[1], toget[0]) 
 
     def getPassword(self, website, email):
         copy(self.working.getEntry(email, website))
