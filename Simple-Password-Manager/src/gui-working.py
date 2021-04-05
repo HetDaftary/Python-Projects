@@ -10,6 +10,7 @@ class GUI:
     def __init__(self):
         self.app = QApplication(["Simple-Password-Manager-Working"])
         self.mainWindow = QMainWindow()
+        self.mainWindow.resize(540, 960)
         self.mainWin = QWidget()
         self.mainWinLayout = QHBoxLayout()
         self.mainWin.setLayout(self.mainWinLayout)
@@ -355,12 +356,12 @@ class GUI:
 
         self.cleanAWidget(self.placeToPutEntriesLayout)
 
-        count = 1
-
         self.placeToPutEntriesLayout.addWidget(QLabel("Email"), 0, 0)
         self.placeToPutEntriesLayout.addWidget(QLabel("Website"), 0, 1)
         self.placeToPutEntriesLayout.addWidget(QLabel(""), 0, 2)
         self.placeToPutEntriesLayout.addWidget(QLabel(""), 0, 3)
+
+        count = 1
 
         for i in range(len(self.currentEntries)):
             countV = 0

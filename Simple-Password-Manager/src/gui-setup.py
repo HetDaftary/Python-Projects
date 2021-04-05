@@ -9,6 +9,7 @@ class GUI:
     def __init__(self):
         self.app = QApplication(["Simple-Password-Manager-Setup"])
         self.mainWindow = QMainWindow()
+        self.mainWindow.resize(540, 960)
         self.win = QWidget()
 
         self.initUI()
