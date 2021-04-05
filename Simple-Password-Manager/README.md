@@ -11,11 +11,10 @@ Authentication done using SHA-512
 * When getting an entry, it automatically puts the pass in the clipboard so you can paste it in the website.
 * Supports multiple rounds of hashing. Currently setup for 1000 rounds of hash function. 
 * Easy to change the number of rounds, just need to open Encryption.py and change the HASH_COUNT constant.
-* Current Version: <b>1.4</b>
+* Current Version: <b>1.5</b>
 ## How to run it:
 * Command-Line:
-  * Step 1: Setup. For this, run commandline-setup.py file and enter the password.
-  * Step 2: Use: For this, run the command-line.py when you want to use it.
+  * Run src/main.py and it will launch the setup if needed or launch the working if setup is done.
 * GUI:
   * Step 1: Setup, For this, run gui-setup.py file and enter the password.
   * Step 2: Working: For this, run gui-working file when you want to use it.
