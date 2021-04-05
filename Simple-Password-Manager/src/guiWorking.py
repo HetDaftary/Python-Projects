@@ -487,6 +487,3 @@ class GUI:
 
     def setTheme(self, theme):
         apply_stylesheet(self.app, theme)
-
-if __name__ == "__main__":
-    gui = GUI()
