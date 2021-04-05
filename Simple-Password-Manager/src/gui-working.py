@@ -2,9 +2,7 @@ from Working import Working
 from PyQt5.QtWidgets import *
 from sys import argv, exit
 from clipboard import copy
-from darkdetect import isDark
 from qt_material import apply_stylesheet
-from copy import deepcopy
 
 darkTheme, lightTheme = 'dark_blue.xml', 'light_blue.xml'
 

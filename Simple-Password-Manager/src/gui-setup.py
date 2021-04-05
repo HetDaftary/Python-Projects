@@ -8,14 +8,14 @@ darkTheme, lightTheme = 'dark_cyan.xml', 'light_blue.xml'
 class GUI:
     def __init__(self):
         self.app = QApplication(["Simple-Password-Manager-Setup"])
-        # self.app.setStyleSheet()
         self.mainWindow = QMainWindow()
         self.win = QWidget()
-        self.mainWindow.setCentralWidget(self.win)
 
         self.initUI()
         self.initMenuBar()
 
+        self.mainWindow.setCentralWidget(self.win)
+        # self.win.show()
         self.mainWindow.show()
         exit(self.app.exec_())
 
