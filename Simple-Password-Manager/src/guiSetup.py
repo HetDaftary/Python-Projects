@@ -1,13 +1,13 @@
 from setup import setup
 from PyQt5.QtWidgets import *
-from sys import exit
+from sys import exit, argv
 from qt_material import apply_stylesheet
 
 darkTheme, lightTheme = 'dark_cyan.xml', 'light_blue.xml'
 
 class GUI:
     def __init__(self):
-        self.app = QApplication(["Simple-Password-Manager-Setup"])
+        self.app = QApplication(argv)
         self.mainWindow = QMainWindow()
         self.mainWindow.resize(540, 960)
         self.win = QWidget()
