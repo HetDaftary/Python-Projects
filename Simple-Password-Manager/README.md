@@ -14,10 +14,9 @@ Authentication done using SHA-512
 * Current Version: <b>1.5</b>
 ## How to run it:
 * Command-Line:
-  * Run src/main.py and it will launch the setup if needed or launch the working if setup is done.
+  * Run src/mainCommandline.py and it will launch the required file for command line. 
 * GUI:
-  * Step 1: Setup, For this, run gui-setup.py file and enter the password.
-  * Step 2: Working: For this, run gui-working file when you want to use it.
+  * Run src/main.py and it will launch the setup if needed or launch the working if setup is done.
 
 ## Images:
 <br/>
