@@ -1,6 +1,5 @@
 pybase64
 pycrypto
-hashlib
 pyqt5
 qt_material
 darkdetect
