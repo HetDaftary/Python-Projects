@@ -1,12 +1,11 @@
-import guiSetup
-import guiWorking
+from .GUI import setup
+from .GUI import working
 from os.path import exists
+from sys import platform
+from src.GUI.setup import fileName
 
-fileName = "../data/2.db"
-
-if __name__ == "__main__":
-    gui = None 
+if __name__ == '__main__':
     if exists(fileName):
-        gui = guiWorking.GUI()
+        gui = working.GUI()
     else:
-        gui = guiSetup.GUI()
+        gui = setup.GUI()

@@ -1,11 +1,10 @@
-import commandLine
-import commandlineSetup
+from src.CommandLine import setup
+from src.CommandLine import working
 from os.path import exists
-
-fileName = "../data/2.db"
+from src.CommandLine.setup import fileName
 
 if __name__ == "__main__":
     if exists(fileName):
-        commandLine.main()
+        working.main()
     else:
-        commandlineSetup.main()
+        setup.main()

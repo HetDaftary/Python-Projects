@@ -1,7 +1,12 @@
 import sqlite3
-from Encryption import *
+from .Encryption import *
+from sys import platform
 
-fileName = "../data/2.db"
+fileName = None
+if platform.lower().startswith("win"):
+    fileName = "data\\2.db"
+else:
+    fileName = "data/2.db"
 
 class Working:
     def __init__(self, primaryPass):
@@ -12,8 +17,8 @@ class Working:
         self.cur = self.conn.cursor()
 
         if hashOfPass == self.getPrimaryPass():
-            # print("Session Granted")      
-            self._primaryPass = hashEnc(primaryPass) 
+            # print("Session Granted")
+            self._primaryPass = hashEnc(primaryPass)
         else:
             pass
 
@@ -29,23 +34,28 @@ class Working:
         return ans
 
     def getEntry(self, email, website):
-        self.cur.execute("SELECT password FROM Passwords WHERE Passwords.email = \"%s\" AND Passwords.website = \"%s\"" % (email, website))
+        self.cur.execute(
+            "SELECT password FROM Passwords WHERE Passwords.email = \"%s\" AND Passwords.website = \"%s\"" % (
+            email, website))
         data = decrypt(self.cur.fetchall()[0][0], self._primaryPass)
         return data
-    
+
     def putEntry(self, email, website, password):
         enc = encrypt(password, self._primaryPass)
-        self.cur.execute("INSERT INTO Passwords(email, website, password) VALUES (\"%s\", \"%s\", \"%s\")" % (email, website, enc))
+        self.cur.execute(
+            "INSERT INTO Passwords(email, website, password) VALUES (\"%s\", \"%s\", \"%s\")" % (email, website, enc))
         self.conn.commit()
-   
+
     def updateEntry(self, email, website, newEmail, newWebsite, newPassword):
-        self.cur.execute("UPDATE Passwords SET email = \"%s\", website = \"%s\", password = \"%s\" WHERE Passwords.email = \"%s\" AND Passwords.website = \"%s\"" % (newEmail, newWebsite, encrypt(newPassword, self._primaryPass), email, website))
+        self.cur.execute(
+            "UPDATE Passwords SET email = \"%s\", website = \"%s\", password = \"%s\" WHERE Passwords.email = \"%s\" AND Passwords.website = \"%s\"" % (
+            newEmail, newWebsite, encrypt(newPassword, self._primaryPass), email, website))
         self.conn.commit()
 
     def seeEntries(self):
         self.cur.execute("SELECT email, website FROM Passwords")
         return self.cur.fetchall()
-    
+
     def changeMasterPassword(self, oldPassword, newPassword):
         oldHash = hash(oldPassword)
         if oldHash != self.getPrimaryPass():
@@ -55,21 +65,24 @@ class Working:
             # Authentication successful.
             self.cur.execute("SELECT * FROM Passwords")
             data = [list(x) for x in self.cur.fetchall()]
-            
+
             tempHash = hashEnc(newPassword)
-            
+
             for i in range(len(data)):
                 data[i][2] = encrypt(decrypt(data[i][2], self._primaryPass), tempHash)
-            self._primaryPass = tempHash        
-            
+            self._primaryPass = tempHash
+
             for i in data:
-                self.cur.execute("UPDATE Passwords SET password = \"%s\" WHERE Passwords.email = \"%s\" AND Passwords.website = \"%s\"" % (i[2], i[0], i[1]))
-            self.cur.execute("UPDATE PrimaryPassword SET primaryPassword = \"%s\" WHERE PrimaryPassword.primaryPassword = \"%s\"" % (hash(newPassword), oldHash))
+                self.cur.execute(
+                    "UPDATE Passwords SET password = \"%s\" WHERE Passwords.email = \"%s\" AND Passwords.website = \"%s\"" % (
+                    i[2], i[0], i[1]))
+            self.cur.execute(
+                "UPDATE PrimaryPassword SET primaryPassword = \"%s\" WHERE PrimaryPassword.primaryPassword = \"%s\"" % (
+                hash(newPassword), oldHash))
             self.conn.commit()
-            
+
             return True
-            
-    
+
     def __del__(self):
         # print("Closing the object")
         self.cur.close()

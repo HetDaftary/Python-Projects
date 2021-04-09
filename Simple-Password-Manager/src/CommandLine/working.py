@@ -2,7 +2,7 @@ from os import system
 from time import sleep
 from clipboard import copy
 from sys import platform
-from Working import Working
+from src.Working import Working
 
 # someConstants.
 padVal = 30
@@ -25,11 +25,11 @@ def toPrint(ls):
     for item in ls:
         printWithPad(item)
 
-    # Our working object.   
+    # Our working object.
     working = None
 
 def main():
-    while True: 
+    while True:
         print("Enter q if you want to quit.")
         i = input("Enter the password: ")
 
@@ -41,11 +41,11 @@ def main():
         if i == 'q' or i == 'Q':
             exit(0) # Exiting as session not granted.
 
-    system(clear)   
+    system(clear)
     # Clearing the output screen.
 
     while True:
-        print("*"*padVal) 
+        print("*"*padVal)
         print("Enter the query. ")
         print("q for quit.\ns for see entries.\ng to get an query.\np for putting an entry.\nu to update an entry.\nc to clear the terminal.\nch for changing the password.")
         print("*"*padVal, end = "\n\n")
@@ -61,10 +61,10 @@ def main():
         elif inVal == 'p':
             email = input("Enter the email: ")
             website = input("Enter the website: ")
-            password = input("Enter the passwords: ")        
+            password = input("Enter the passwords: ")
             working.putEntry(email, website, password)
         elif inVal == 'g':
-            try:    
+            try:
                 email = input("Enter the email: ")
                 website = input("Enter the website: ")
                 copy(working.getEntry(email, website))
@@ -83,15 +83,12 @@ def main():
                         print('Successful. Password changed.')
                 else:
                     print('confirmation failed.')
-        elif inVal == 'u': 
+        elif inVal == 'u':
                 oldEmail = input("Enter the old email")
                 oldWebsite = input("Enter the old website")
                 email = input("Enter the new email: ")
                 website = input("Enter the new website: ")
                 password = input("Enter the new passwords: ")
-                working.updateEntry(oldEmail, oldWebsite, email, website, password)        
+                working.updateEntry(oldEmail, oldWebsite, email, website, password)
         else:
             print("This option is not available.")
-
-if __name__ == "__main__":
-    main()
