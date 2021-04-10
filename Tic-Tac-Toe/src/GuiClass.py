@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from sys import exit
 from qt_material import apply_stylesheet
 from darkdetect import isDark
+from random import randint
 
 darkTheme, lightTheme = 'dark_blue.xml', 'light_blue.xml'
 
@@ -21,16 +22,24 @@ class GUI:
         exit(self.app.exec_())
 
     def initGamePlay(self):
+        self.isOnePlayerGame = False
         self.curTurn = 'x'
+        self.movesMade = 0
         self.curGame = [['' for i in range(3)] for j in range(3)]
         self.canPress = [[True for i in range(3)] for j in range(3)]
+
+    def makeOnePlayerMove(self):
+        while True:
+            i, j = randint(0, 2), randint(0, 2)
+            if self.curGame[i][j] == '':
+                return i, j
 
     def initMenuBar(self):
         global darkTheme, lightTheme
 
         self.menuBar = QMenuBar()
-        self.themeMenu = QMenu("Theme Menu")
 
+        self.themeMenu = QMenu("Theme Menu")
         self.lightThemeAction = QAction("Light Theme")
         self.lightThemeAction.triggered.connect(lambda : apply_stylesheet(self.app, lightTheme))
         self.themeMenu.addAction(self.lightThemeAction)
@@ -39,7 +48,34 @@ class GUI:
         self.themeMenu.addAction(self.darkThemeAction)
         self.menuBar.addMenu(self.themeMenu)
 
+        self.gameMenu = QMenu("New Game")
+        self.makeNewOnePlayerGameAction = QAction("New 1 player game.")
+        self.makeNewOnePlayerGameAction.triggered.connect(lambda : self.makeNewOnePlayerGame())
+        self.gameMenu.addAction(self.makeNewOnePlayerGameAction)
+        self.makeNewTwoPlayerGameAction = QAction("New 2 player game.")
+        self.makeNewTwoPlayerGameAction.triggered.connect(lambda : self.makeNewTwoPlayerGame())
+        self.gameMenu.addAction(self.makeNewTwoPlayerGameAction)
+        self.menuBar.addMenu(self.gameMenu)
+
         self.mainWindow.setMenuBar(self.menuBar)
+
+    def makeNewGame(self):
+        self.movesMade = 0
+        self.lab.setText('')
+        for i in range(3):
+            for j in range(3):
+                self.curGame[i][j] = ''
+                self.buttons[i][j].setText('')
+                self.canPress[i][j] = True
+        self.curTurn = 'x'
+
+    def makeNewTwoPlayerGame(self):
+        self.isOnePlayerGame = False
+        self.makeNewGame()
+
+    def makeNewOnePlayerGame(self):
+        self.isOnePlayerGame = True
+        self.makeNewGame()
 
     def initUI(self):
         global darkTheme, lightTheme
@@ -80,8 +116,37 @@ class GUI:
                 for i in range(3):
                     for j in range(3):
                         self.canPress[i][j] = False
-            self.curTurn = 'o' if self.curTurn == 'x' else 'x'
-            self.canPress[i][j] = False
+            if self.isOnePlayerGame:
+                i, j = self.makeOnePlayerMove()
+                self.canPress[i][j] = False
+                self.buttons[i][j].setText('o')
+                self.curGame[i][j] = 'o'
+                self.movesMade += 2
+                self.curTurn = 'o'
+                if self.didWinOccur():
+                    self.lab.setText('o won')
+                    for i in range(3):
+                        for j in range(3):
+                            self.canPress[i][j] = False
+                else:
+                    pass
+                self.curTurn = 'x'
+                if self.movesMade == 8:
+                    for i in range(3):
+                        for j in range(3):
+                            if self.curGame[i][j] == '':
+                                self.curGame[i][j] = 'x'
+                    if self.didWinOccur():
+                        self.lab.setText("X won.")
+                    else:
+                        self.lab.setText("Draw.")
+                        for i in range(3):
+                            for j in range(3):
+                                self.canPress[i][j] = False
+            else:    
+                self.curTurn = 'o' if self.curTurn == 'x' else 'x'
+                self.canPress[i][j] = False
+                self.movesMade += 1
 
     def didWinOccur(self):
         if self.curGame[1][1] == self.curTurn:
