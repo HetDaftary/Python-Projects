@@ -5,12 +5,14 @@ from qt_material import apply_stylesheet
 from darkdetect import isDark
 from random import randint
 
+size = 960, 540
 darkTheme, lightTheme = 'dark_blue.xml', 'light_blue.xml'
 
 class GUI:
     def __init__(self):
         self.app = QApplication(["Tic-Tac-Toe"])
         self.mainWindow = QMainWindow()
+        self.mainWindow.resize(*size)
         self.win = QWidget()
         self.mainWindow.setCentralWidget(self.win)
 
