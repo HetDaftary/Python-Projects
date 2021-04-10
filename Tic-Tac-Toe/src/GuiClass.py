@@ -1,21 +1,23 @@
 # Import statements
 from PyQt5.QtWidgets import *
 from sys import exit
-import qdarkstyle
-# import breeze_resources
+from qt_material import apply_stylesheet
+from darkdetect import isDark
 
+darkTheme, lightTheme = 'dark_blue.xml', 'light_blue.xml'
 
 class GUI:
     def __init__(self):
         self.app = QApplication(["Tic-Tac-Toe"])
-        self.app.setStyleSheet(qdarkstyle.load_stylesheet())
-
+        self.mainWindow = QMainWindow()
         self.win = QWidget()
-        
+        self.mainWindow.setCentralWidget(self.win)
+
         self.initGamePlay()
+        self.initMenuBar()
         self.initUI()
 
-        self.win.show()
+        self.mainWindow.show()
         exit(self.app.exec_())
 
     def initGamePlay(self):
@@ -23,7 +25,29 @@ class GUI:
         self.curGame = [['' for i in range(3)] for j in range(3)]
         self.canPress = [[True for i in range(3)] for j in range(3)]
 
+    def initMenuBar(self):
+        global darkTheme, lightTheme
+
+        self.menuBar = QMenuBar()
+        self.themeMenu = QMenu("Theme Menu")
+
+        self.lightThemeAction = QAction("Light Theme")
+        self.lightThemeAction.triggered.connect(lambda : apply_stylesheet(self.app, lightTheme))
+        self.themeMenu.addAction(self.lightThemeAction)
+        self.darkThemeAction = QAction("Dark Theme")
+        self.darkThemeAction.triggered.connect(lambda : apply_stylesheet(self.app, darkTheme))
+        self.themeMenu.addAction(self.darkThemeAction)
+        self.menuBar.addMenu(self.themeMenu)
+
+        self.mainWindow.setMenuBar(self.menuBar)
+
     def initUI(self):
+        global darkTheme, lightTheme
+        if isDark():
+            apply_stylesheet(self.app, darkTheme)
+        else:
+            apply_stylesheet(self.app, lightTheme)
+
         self.lab = QLabel(text = "", parent=self.win)   
         self.lab.adjustSize() # It is a kind of better to do this to avoid bugs.
 
@@ -38,43 +62,14 @@ class GUI:
         layout = QGridLayout()
         self.wid.setLayout(layout)
 
-        b00 = QPushButton(text = "")
-        b01 = QPushButton(text = "")
-        b02 = QPushButton(text = "")
-        
-        b10 = QPushButton(text = "")
-        b11 = QPushButton(text = "")
-        b12 = QPushButton(text = "")
-        
-        b20 = QPushButton(text = "")
-        b21 = QPushButton(text = "")
-        b22 = QPushButton(text = "")
-        
-        layout.addWidget(b00, 0, 0)
-        layout.addWidget(b01, 0, 1)
-        layout.addWidget(b02, 0, 2)
-        
-        layout.addWidget(b10, 1, 0)
-        layout.addWidget(b11, 1, 1)
-        layout.addWidget(b12, 1, 2)
-        
-        layout.addWidget(b20, 2, 0)
-        layout.addWidget(b21, 2, 1)
-        layout.addWidget(b22, 2, 2)
+        self.buttons = []
 
-        b00.clicked.connect(lambda : self.onPress(0, 0))
-        b01.clicked.connect(lambda : self.onPress(0, 1))
-        b02.clicked.connect(lambda : self.onPress(0, 2))
-
-        b10.clicked.connect(lambda : self.onPress(1, 0))
-        b11.clicked.connect(lambda : self.onPress(1, 1))
-        b12.clicked.connect(lambda : self.onPress(1, 2))
-        
-        b20.clicked.connect(lambda : self.onPress(2, 0))
-        b21.clicked.connect(lambda : self.onPress(2, 1))
-        b22.clicked.connect(lambda : self.onPress(2, 2))
-
-        self.buttons = [[b00, b01, b02], [b10, b11, b12], [b20, b21, b22]]
+        for i in range(3):
+            self.buttons.append([])
+            for j in range(3):
+                self.buttons[i].append(QPushButton())
+                self.buttons[i][j].clicked.connect(lambda _, i = i, j = j: self.onPress(i, j))
+                layout.addWidget(self.buttons[i][j], i, j)
 
     def onPress(self, i, j):
         if self.canPress[i][j]:
