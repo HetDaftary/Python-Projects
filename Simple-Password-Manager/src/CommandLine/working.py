@@ -3,6 +3,7 @@ from time import sleep
 from clipboard import copy
 from sys import platform
 from src.Working import Working
+from getpass import getpass
 
 # someConstants.
 padVal = 30
@@ -31,7 +32,7 @@ def toPrint(ls):
 def main():
     while True:
         print("Enter q if you want to quit.")
-        i = input("Enter the password: ")
+        i = getpass(prompt="Enter the password: ")
 
         working = Working(i)
         if working.didPassWork():
