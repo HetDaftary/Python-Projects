@@ -4,6 +4,7 @@ Python based projects.
 
 ## List of projects implemented
 
+* [Calculator-App](https://github.com/HetDaftary/Python-Projects/tree/master/Calculator-App)
 * [Directory-Tree](https://github.com/HetDaftary/Python-Projects/tree/master/Directory-Tree)
 * [Folder-Sorter](https://github.com/HetDaftary/Python-Projects/tree/master/Folder-Sorter)
 * [Image-Editor](https://github.com/HetDaftary/Python-Projects/tree/master/Image-Editor)
