@@ -1,12 +1,17 @@
 import sqlite3
 from .Encryption import *
 from sys import platform
+from os.path import isdir, environ
+from os import system 
 
 fileName = None
 if platform.lower().startswith("win"):
     fileName = "data\\2.db"
 else:
-    fileName = "data/2.db"
+    path = environ["HOME"] + '/.SimplePasswordManager'
+    if not isdir(path):
+        system(f"mkdir -p {path}")
+    fileName = path + '/2.db'
 
 class Working:
     def __init__(self, primaryPass):

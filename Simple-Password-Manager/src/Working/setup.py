@@ -1,7 +1,8 @@
 import sqlite3
-from os.path import exists
+from os.path import exists, join, isdir
 from .Encryption import hash
 from sys import platform
+from os import environ, system
 
 createTableSyntax = [
     "CREATE TABLE Passwords (email TEXT, website TEXT, password TEXT, PRIMARY KEY(email,website));",
@@ -12,7 +13,10 @@ fileName = None
 if platform.lower().startswith("win"):
     fileName = "data\\2.db"
 else:
-    fileName = "data/2.db"
+    path = environ["HOME"] + '/.SimplePasswordManager'
+    if not isdir(path):
+        system(f"mkdir -p {path}")
+    fileName = path + '/2.db'
 
 def setup(primaryPassword):
     if exists(fileName):
