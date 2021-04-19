@@ -1,8 +1,8 @@
 import sqlite3
 from .Encryption import *
 from sys import platform
-from os.path import isdir, environ
-from os import system 
+from os.path import isdir
+from os import system, environ
 
 fileName = None
 if platform.lower().startswith("win"):
