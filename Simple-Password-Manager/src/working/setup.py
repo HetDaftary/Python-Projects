@@ -11,11 +11,14 @@ createTableSyntax = [
 
 fileName = None
 if platform.lower().startswith("win"):
-    fileName = "data\\2.db"
+    path = environ['APPDATA'] + '\\.SimplePasswordManager'
+    if not isdir(path):
+        system(f"mkdir -p \"{path}\"")
+    fileName = path + '\\2.db'
 else:
     path = environ["HOME"] + '/.SimplePasswordManager'
     if not isdir(path):
-        system(f"mkdir -p {path}")
+        system(f"mkdir -p \"{path}\"")
     fileName = path + '/2.db'
 
 def setup(primaryPassword):

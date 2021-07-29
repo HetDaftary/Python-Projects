@@ -4,3 +4,4 @@ pyqt5
 qt_material
 darkdetect
 clipboard
+hashlib
