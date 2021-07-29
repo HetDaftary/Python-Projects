@@ -2,7 +2,7 @@ from os import system
 from time import sleep
 from clipboard import copy
 from sys import platform
-from src.Working import Working
+from src.working import Working
 from getpass import getpass
 
 # someConstants.

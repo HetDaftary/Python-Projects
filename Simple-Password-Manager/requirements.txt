@@ -1,5 +1,5 @@
 pybase64
-pycrypto
+pycryptodome
 pyqt5
 qt_material
 darkdetect
