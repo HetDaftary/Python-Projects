@@ -2,9 +2,9 @@
 
 A python based simple password manager project with sqlite3 and encryption.
 
-Encryption Algorithm used is AES-256
-Private Key made using SHA-256
-Authentication done using SHA-512
+Encryption Algorithm used is AES-256<br/>
+Private Key made using SHA-256<br/>
+Authentication done using SHA-512<br/>
 
 ## Features:
 * Simple command line based work and GUI based operations.
