@@ -1,7 +1,8 @@
 pybase64
 pycryptodome
-pyqt5
-qt_material
-darkdetect
+pysqlite3
 clipboard
-hashlib
+pyqt5
+qt-material
+darkdetect
+typing

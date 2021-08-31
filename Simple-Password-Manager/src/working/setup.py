@@ -1,39 +1,54 @@
-import sqlite3
-from os.path import exists, join, isdir
-from .Encryption import hash
+'''
+1. Connect to the database
+2. Create the tables
+3. Insert primary password
+'''
+
+import sqlite3 
+from os import environ, mkdir, path
 from sys import platform
-from os import environ, system
+from .Encryption import hash
 
-createTableSyntax = [
-    "CREATE TABLE Passwords (email TEXT, website TEXT, password TEXT, PRIMARY KEY(email,website));",
-    "CREATE TABLE PrimaryPassword (primaryPassword TEXT, PRIMARY KEY(primaryPassword));"
-]
-
-fileName = None
+fileName = "Passwords.db"
+pathName = None
 if platform.lower().startswith("win"):
-    path = environ['APPDATA'] + '\\.SimplePasswordManager'
-    if not isdir(path):
-        system(f"mkdir -p \"{path}\"")
-    fileName = path + '\\2.db'
+    pathName = f"{environ['APPDATA']}\\SimplePasswordManager"
 else:
-    path = environ["HOME"] + '/.SimplePasswordManager'
-    if not isdir(path):
-        system(f"mkdir -p \"{path}\"")
-    fileName = path + '/2.db'
+    pathName = f"{environ['HOME']}/.config/SimplePasswordManager" 
+if not path.exists(pathName):    
+    mkdir(pathName)
+fileName = path.join(pathName, fileName)
 
-def setup(primaryPassword):
-    if exists(fileName):
-        raise Exception("File already exists. Delete 2.db if something is wrong")
-
+def main(primaryPassword):
     conn = sqlite3.connect(fileName)
     cur = conn.cursor()
 
-    for tableSyntax in createTableSyntax:
-        cur.execute(tableSyntax)
+    # Create the table 
+    createTableSyntax = [
+        '''
+        CREATE TABLE "Passwords" (
+	        "email"	TEXT,
+	        "website"	TEXT,
+        	"password"	TEXT,
+        	PRIMARY KEY("email","website")
+        );
+        ''',
+        '''
+        CREATE TABLE "PrimaryPassword" (
+	        "password"	TEXT
+        );
+        '''
+    ]
+
+    for syntax in createTableSyntax:
+        cur.execute(syntax)
         conn.commit()
 
-    cur.execute("INSERT INTO PrimaryPassword(primaryPassword) VALUES (\"%s\");" % (hash(primaryPassword)))
+    # Insert the primary password
+
+    syntax = f"INSERT INTO PrimaryPassword('password') VALUES('{hash(primaryPassword)}');"
+    cur.execute(syntax)
     conn.commit()
+
     cur.close()
     conn.close()
-
