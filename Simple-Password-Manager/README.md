@@ -9,9 +9,8 @@ Authentication done using SHA-512<br/>
 ## Features:
 * Simple command line based work and GUI based operations.
 * When getting an entry, it automatically puts the pass in the clipboard so you can paste it in the website.
-* Supports multiple rounds of hashing. Currently setup for 1000 rounds of hash function. 
-* Easy to change the number of rounds, just need to open [Encryption.py](src/working/Encryption.py) and change the HASH_COUNT constant.
-* Current Version: <b>1.6</b>
+* Current Version: <b>1.7</b>
+
 ## How to run it:
 * Command-Line:
   * Run src/mainCommandline.py and it will launch the required file for command line.
