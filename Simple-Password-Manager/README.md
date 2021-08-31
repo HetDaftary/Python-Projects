@@ -26,14 +26,14 @@ Authentication done using SHA-512<br/>
 
 ## Images:
 <br/>
-<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/1.png">
+<img src = "img/1.png">
 <br/><br/>
-<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/2.png">
+<img src = "img/2.png">
 <br/><br/>
-<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/3.png">
+<img src = "img/3.png">
 <br/><br/>
-<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/4.png">
+<img src = "img/4.png">
 <br/><br/>
-<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/5.png">
+<img src = "img/5.png">
 <br/><br/>
-<img src = "https://github.com/HetDaftary/Python-Projects/blob/master/Simple-Password-Manager/img/6.png">
+<img src = "img/6.png">
