@@ -10,7 +10,7 @@ Authentication done using SHA-512<br/>
 * Simple command line based work and GUI based operations.
 * When getting an entry, it automatically puts the pass in the clipboard so you can paste it in the website.
 * Supports multiple rounds of hashing. Currently setup for 1000 rounds of hash function. 
-* Easy to change the number of rounds, just need to open Encryption.py and change the HASH_COUNT constant.
+* Easy to change the number of rounds, just need to open [Encryption.py](src/working/Encryption.py) and change the HASH_COUNT constant.
 * Current Version: <b>1.6</b>
 ## How to run it:
 * Command-Line:
@@ -23,6 +23,13 @@ Authentication done using SHA-512<br/>
     python3 -m src.main # To run GUI.
     python3 -m src.mainCommandline # To run CommandLine.
 
+<b>OR</b>
+<br/>Use the scripts for windows and Linux as follows
+
+      .\main.bat # For Windows 
+      ./main.sh # For Linux
+
+Note: This only runs the GUI. 
 
 ## Images:
 <br/>
