@@ -1,4 +1,4 @@
-import os 
+from os import system, remove
 from typing import *
 
 FILENAME = "mylist.txt"
@@ -25,8 +25,8 @@ def mergeVideosSameProfile(videoNames: List[str], outputName: str) -> None:
     global FILENAME
     
     makeFile(videoNames)  
-    os.system("ffmpeg -f concat -safe 0 -i {} -c copy {}".format(FILENAME, outputName))
-    os.remove(FILENAME)
+    system("ffmpeg -f concat -safe 0 -i {} -c copy {}".format(FILENAME, outputName))
+    remove(FILENAME)
 
 '''
 @breif Merge videos with rendering to a particular resolution and framerate.
@@ -41,5 +41,5 @@ def mergeVideosDifferentProfile(videoNames: List[str], outputName: str, quality:
 
     makeFile(videoNames)
 
-    os.system("ffmpeg -f concat -i {} -vf scale={} -framerate {} {}".format(FILENAME, ':'.join([str(x) for x in quality]), fps, outputName))
-    os.remove(FILENAME)
+    system("ffmpeg -f concat -i {} -vf scale={} -framerate {} {}".format(FILENAME, ':'.join([str(x) for x in quality]), fps, outputName))
+    remove(FILENAME)
