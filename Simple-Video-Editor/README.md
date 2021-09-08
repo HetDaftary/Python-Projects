@@ -9,4 +9,4 @@
 - [x] Merging videos
     - [x] Same profile
     - [x] To some output quality
-- [ ] Cutting Videos 
+- [x] Cutting Videos 
