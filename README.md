@@ -11,4 +11,5 @@ Python based projects.
 * [Logging-Events](https://github.com/HetDaftary/Python-Projects/tree/master/Logging-Events)
 * [Reminder-App-With-Notifications](https://github.com/HetDaftary/Python-Projects/tree/master/Reminder-App-With-Notification)
 * [Simple-Password-Manager](https://github.com/HetDaftary/Python-Projects/tree/master/Simple-Password-Manager)
+* [Simple-Video-Editor](https://github.com/HetDaftary/Python-Projects/tree/master/Simple-Video-Editor)
 * [Tic-Tac-Toe](https://github.com/HetDaftary/Python-Projects/tree/master/Tic-Tac-Toe)
