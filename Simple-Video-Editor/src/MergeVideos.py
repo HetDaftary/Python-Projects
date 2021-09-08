@@ -24,7 +24,7 @@ def makeFile(videoNames: List[str]):
 def mergeVideosSameProfile(videoNames: List[str], outputName: str) -> None:
     global FILENAME
     
-    makeFile(videoNames)    
+    makeFile(videoNames)  
     os.system("ffmpeg -f concat -safe 0 -i {} -c copy {}".format(FILENAME, outputName))
     os.remove(FILENAME)
 
