@@ -1,1 +1,2 @@
 - Adding features to merge videos.
+- Adding feature to cut videos.
